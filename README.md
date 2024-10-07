@@ -28,7 +28,7 @@ Before you begin, ensure your system has the following:
 
     ```bash
     git clone https://github.com/imdrashedul/project-management.git
-    cd task-management-system
+    cd project-management
     ```
 
 2. **Install backend dependencies**:
