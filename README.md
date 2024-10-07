@@ -1,66 +1,134 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Task Management System (Dummy Project)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This project is a demonstration of my skills in Laravel development, built as a dummy Task Management System. It showcases my ability to implement user authentication, REST API development with Laravel Passport, CSV import/export functionality, task and project management, and PDF report generation. Although simplified, this system highlights various Laravel concepts that I’ve applied within a short period of time.
 
-## About Laravel
+## Table of Contents
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Features](#features)
+- [REST API](#rest-api)
+- [Usage Instructions](#usage-instructions)
+- [Thank You](#thank-you)
+- [Further Assistance](#further-assistance)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Prerequisites
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Before you begin, ensure your system has the following:
 
-## Learning Laravel
+- PHP >= 8.1
+- Composer
+- Node.js and npm
+- MySQL or another compatible database
+- Laravel CLI
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Installation
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+1. **Clone the repository**:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    ```bash
+    git clone https://github.com/your-repo-url/task-management-system.git
+    cd task-management-system
+    ```
 
-## Laravel Sponsors
+2. **Install backend dependencies**:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    ```bash
+    composer install --dev
+    ```
 
-### Premium Partners
+3. **Install frontend dependencies and build assets**:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+    ```bash
+    npm install
+    npm run build
+    ```
 
-## Contributing
+4. **Set up your environment**: 
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    - You can find the `.env` file attached to the email I sent. Download it and place it in the root directory of the project.
+    - Update the following database configuration inside the `.env` file:
 
-## Code of Conduct
+    ```dotenv
+    DB_DATABASE=project_management
+    DB_USERNAME=root
+    DB_PASSWORD=your_password
+    ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+5. **Run database migrations and seed the database**:
 
-## Security Vulnerabilities
+    ```bash
+    php artisan migrate --seed
+    ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+6. **Set up Laravel Passport for API authentication**:
 
-## License
+    ```bash
+    php artisan passport:client --personal
+    ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+7. **Start the Laravel development server**:
+
+    ```bash
+    php artisan serve
+    ```
+
+8. **Start the queue worker** in a separate terminal:
+
+    ```bash
+    php artisan queue:work --daemon --timeout=900 --memory=1024
+    ```
+
+9. Access the application at `http://localhost:8000`. You can log in using the default credentials:
+
+    - Email: `user@localhost`
+    - Password: `password`
+
+    Or, register a new user account.
+
+## Features
+
+- **User Authentication**: Secure user registration and login.
+- **Projects and Tasks Management**: Users can create, update, and delete their own projects and tasks.
+- **Subtasks**: Each task can have its own subtasks, enhancing project organization.
+- **CSV Import**: Import projects, tasks, and subtasks via a CSV file.
+- **PDF Report Generation**: Generate detailed PDF reports for projects and tasks.
+- **API Integration**: REST API developed with Laravel Passport for interacting with projects and tasks.
+
+## Usage Instructions
+
+### Importing Projects and Tasks via CSV
+
+1. After logging in, go to "Import From CSV" in the header navigation menu.
+2. Download the sample CSV by clicking the **Download CSV Sample** button.
+3. Upload the CSV file using the file drop zone and click **Import**.
+4. Depending on your system, the import may take 1-2 minutes. You will be notified once the process is complete.
+
+### Creating Projects and Tasks
+
+- Navigate to **Projects > Add** to create a new project.
+- Navigate to **Tasks > Add** to create a new task.
+
+### Generating PDF Reports
+
+- On the **Projects List** or **Project Details** page, click the **Download Report** button to generate a PDF report of your projects and tasks.
+
+## REST API
+
+This project includes a fully functional REST API for managing projects, tasks, and subtasks. API documentation is available in the application, accessible from the **API Docs** link in the navigation menu.
+
+### Authentication
+
+To interact with the API, obtain an authentication token via the `/auth/login` or `/oauth/token` endpoint. Include this token as a Bearer token in the Authorization header for subsequent API requests.
+
+For detailed API usage, refer to the [API Docs](http://localhost:8000/api/documentation) provided in the application.
+
+## Thank You
+
+Thank you for reviewing this project, which I’ve created to demonstrate my Laravel development skills. I hope it provides a good insight into my technical abilities.
+
+## Further Assistance
+
+If you need further clarification or assistance, feel free to reach out to me at:
+
+**Email**: route.imdrashedul@gmail.com

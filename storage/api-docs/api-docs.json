@@ -1,0 +1,1769 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Project Task Management",
+        "description": "Sample Project to Demonstrate Laravel API Implementation with Passport.",
+        "contact": {
+            "email": "route.imdrashedul@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login to the system and get API Token",
+                "operationId": "fb66b153966d9fac2e999136ef0ade67",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successfull",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessAuth"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorLoginValidation"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Register user account",
+                "operationId": "fb835c97347e657e2a627790c4c5817a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Registration successfull",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessAuth"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorRegisterValidation"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/projects": {
+            "get": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Get a list of paginated projects",
+                "description": "Returns a list of projects with pagination",
+                "operationId": "229d90e5cb689f53753846354ec9b7d5",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Number of projects per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 15
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of paginated projects",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessProjectPaginated"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorUnauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Create a new project",
+                "operationId": "64e2c90ec966de73f1ae3361106288bf",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProjectRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Project created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessProjectCreated"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorProjectValidation"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorUnauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/projects/{id}": {
+            "get": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Get a single project by its ID",
+                "operationId": "4e1905b8e174199605b555cac5922167",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the project",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Details of a single project",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessProjectFetch"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorProjectNotFound"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorUnauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Update a project",
+                "operationId": "716bae898aeaa6b32146f63b4ecd1fbf",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the project to update",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProjectRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Project updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessProjectUpdated"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorProjectValidation"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorProjectNotFound"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorUnauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Delete a project",
+                "operationId": "c80ebc592a8f9d46a038d50a7da42008",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the project to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Project deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessProjectDeleted"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorProjectNotFound"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorUnauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/projects/{id}/tasks": {
+            "get": {
+                "tags": [
+                    "Projects",
+                    "Tasks"
+                ],
+                "summary": "Get tasks for a project",
+                "operationId": "fa83b1b38a71ff5436eb12fe03ce7dbc",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the project",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Number of projects per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 15
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of tasks for the project",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessTasksPaginated"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorProjectNotFound"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorUnauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/tasks": {
+            "get": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Get a list of paginated tasks",
+                "description": "Returns a list of tasks with pagination",
+                "operationId": "89f841aadff57d91e6136a738fd4a0f6",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Number of tasks per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 15
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of paginated tasks",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessTasksPaginated"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorUnauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Create a new task",
+                "operationId": "5325d35634686a28458a46c33dbf99dd",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TaskCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Task created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessTaskCreated"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorTaskCreateValidation"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorUnauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/tasks/{id}": {
+            "get": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Get a single task by its ID",
+                "operationId": "9c708295c919ce91e53ecdcc78244841",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the task",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Details of a single task",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessTaskFetch"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Task not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorTaskNotFound"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorUnauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Update a task",
+                "operationId": "10a24bf5d2e53be95928af7d28fd0e70",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the task to update",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TaskUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Task updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessTaskUpdated"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Task not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorTaskNotFound"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorTaskUpdateValidation"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorUnauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/task/{id}": {
+            "delete": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Delete a task",
+                "operationId": "8d20beb45c645092f1316446f7e42de8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the task to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Task deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessTaskDeleted"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Task not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorTaskNotFound"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorUnauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/tasks/{id}/subtasks": {
+            "get": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Get subtasks for a task",
+                "operationId": "f1cac15512f94d8eecb7be4d78ae7fc6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the task",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Number of subtasks per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 15
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of subtasks for the task",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessTasksPaginated"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Task not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorTaskNotFound"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorUnauthenticated"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "JwtToken": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Project": {
+                "required": [
+                    "id",
+                    "title",
+                    "status",
+                    "priority",
+                    "description"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Project ID",
+                        "type": "string",
+                        "example": "01j99vx286z90vhmebjnj7rycw"
+                    },
+                    "title": {
+                        "description": "Project title",
+                        "type": "string",
+                        "example": "Sample Project"
+                    },
+                    "status": {
+                        "description": "Name of Status. Enums\\ProjectStatus->name",
+                        "type": "string",
+                        "example": "Development"
+                    },
+                    "status_code": {
+                        "description": "Status Code. Enums\\ProjectStatus->value",
+                        "type": "integer",
+                        "example": 4
+                    },
+                    "priority": {
+                        "description": "Project priority. Enums\\Priority->name",
+                        "type": "string",
+                        "example": "High"
+                    },
+                    "priority_code": {
+                        "description": "Priority Code. Enums\\Priority->value",
+                        "type": "integer"
+                    },
+                    "description": {
+                        "description": "Project description. Rich Text",
+                        "type": "string"
+                    },
+                    "deadline": {
+                        "description": "Project deadline.",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "created_at": {
+                        "description": "Project creation time",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Project update time",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "task_count": {
+                        "description": "Number of tasks",
+                        "type": "integer"
+                    },
+                    "pending_task_count": {
+                        "description": "Number of pending tasks",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "Task": {
+                "properties": {
+                    "id": {
+                        "description": "Task ID",
+                        "type": "string",
+                        "example": "01j99vx286z90vhmebjnj7rycw"
+                    },
+                    "title": {
+                        "description": "Task title",
+                        "type": "string",
+                        "example": "Sample Task"
+                    },
+                    "status": {
+                        "description": "Name of Status. Enums\\TaskStatus->name",
+                        "type": "string",
+                        "example": "In Progress"
+                    },
+                    "status_code": {
+                        "description": "Status Code. Enums\\TaskStatus->value",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "priority": {
+                        "description": "Task priority. Enums\\Priority->name",
+                        "type": "string",
+                        "example": "High"
+                    },
+                    "priority_code": {
+                        "description": "Priority Code. Enums\\Priority->value",
+                        "type": "integer"
+                    },
+                    "details": {
+                        "description": "Task details. Rich Text",
+                        "type": "string"
+                    },
+                    "deadline": {
+                        "description": "Task deadline.",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "created_at": {
+                        "description": "Task creation time",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Task update time",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "subtask_count": {
+                        "description": "Number of Subtasks",
+                        "type": "integer"
+                    },
+                    "pending_subtask_count": {
+                        "description": "Number of pending Subtasks",
+                        "type": "integer"
+                    },
+                    "project": {
+                        "$ref": "#/components/schemas/Project"
+                    },
+                    "parent": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Task"
+                            }
+                        ],
+                        "nullable": true,
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "ErrorUnauthenticated": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Unauthenticated"
+                    }
+                },
+                "type": "object"
+            },
+            "ErrorTaskUpdateValidation": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Task title is required (and 3 more errors)"
+                    },
+                    "errors": {
+                        "properties": {
+                            "parent": {
+                                "description": "Array of error messages related to parent task field",
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "example": "Parent task not found."
+                                }
+                            },
+                            "title": {
+                                "description": "Array of error messages related to title field",
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "example": "Task title is required."
+                                }
+                            },
+                            "status": {
+                                "description": "Array of error messages related to status field",
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "example": "Task status is required."
+                                }
+                            },
+                            "priority": {
+                                "description": "Array of error messages related to priority field",
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "example": "Task priority is required."
+                                }
+                            },
+                            "details": {
+                                "description": "Array of error messages related to details field",
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "example": "Task details is required."
+                                }
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "ErrorTaskCreateValidation": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Task project is required (and 4 more errors)"
+                    },
+                    "errors": {
+                        "properties": {
+                            "project": {
+                                "description": "Array of error messages related to project field",
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "example": "Project is required."
+                                }
+                            },
+                            "parent": {
+                                "description": "Array of error messages related to parent task field",
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "example": "Parent task not found."
+                                }
+                            },
+                            "title": {
+                                "description": "Array of error messages related to title field",
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "example": "Task title is required."
+                                }
+                            },
+                            "status": {
+                                "description": "Array of error messages related to status field",
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "example": "Task status is required."
+                                }
+                            },
+                            "priority": {
+                                "description": "Array of error messages related to priority field",
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "example": "Task priority is required."
+                                }
+                            },
+                            "details": {
+                                "description": "Array of error messages related to details field",
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "example": "Task details is required."
+                                }
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "SuccessTaskCreated": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Task created"
+                    },
+                    "success": {
+                        "properties": {
+                            "task": {
+                                "$ref": "#/components/schemas/Task"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "SuccessTaskUpdated": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Task updated"
+                    },
+                    "success": {
+                        "properties": {
+                            "task": {
+                                "properties": {
+                                    "old": {
+                                        "$ref": "#/components/schemas/Task"
+                                    },
+                                    "new": {
+                                        "$ref": "#/components/schemas/Task"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "TaskCreateRequest": {
+                "required": [
+                    "project",
+                    "title",
+                    "status",
+                    "priority",
+                    "details",
+                    "deadline"
+                ],
+                "properties": {
+                    "project": {
+                        "type": "string",
+                        "example": "01j99vx286z90vhmebjnj7rycw"
+                    },
+                    "parent": {
+                        "type": "string",
+                        "example": "01j9ad21w8dzjp5tktp28z3qef",
+                        "nullable": true
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Sample Task"
+                    },
+                    "status": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "priority": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "deadline": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-10-05 02:59:00"
+                    },
+                    "details": {
+                        "type": "string",
+                        "example": "Task details"
+                    }
+                },
+                "type": "object"
+            },
+            "TaskUpdateRequest": {
+                "required": [
+                    "title",
+                    "status",
+                    "priority",
+                    "details",
+                    "deadline"
+                ],
+                "properties": {
+                    "parent": {
+                        "type": "string",
+                        "example": "01j9ad21w8dzjp5tktp28z3qef",
+                        "nullable": true
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Sample Task"
+                    },
+                    "status": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "priority": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "deadline": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-10-05 02:59:00"
+                    },
+                    "details": {
+                        "type": "string",
+                        "example": "Task details"
+                    }
+                },
+                "type": "object"
+            },
+            "ErrorTaskNotFound": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Task not found"
+                    },
+                    "errors": {
+                        "properties": {
+                            "task": {
+                                "type": "object",
+                                "example": "Bad request or task not exists"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "SuccessTaskDeleted": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Task deleted"
+                    },
+                    "success": {
+                        "properties": {
+                            "task": {
+                                "properties": {
+                                    "deleted": {
+                                        "$ref": "#/components/schemas/Task"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "SuccessTaskFetch": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Task fetched"
+                    },
+                    "success": {
+                        "properties": {
+                            "task": {
+                                "$ref": "#/components/schemas/Task"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "SuccessTasksPaginated": {
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Task"
+                        }
+                    },
+                    "pagination": {
+                        "properties": {
+                            "total": {
+                                "type": "integer"
+                            },
+                            "per_page": {
+                                "type": "integer"
+                            },
+                            "current_page": {
+                                "type": "integer"
+                            },
+                            "last_page": {
+                                "type": "integer"
+                            },
+                            "from": {
+                                "type": "integer"
+                            },
+                            "to": {
+                                "type": "integer"
+                            },
+                            "first": {
+                                "type": "string"
+                            },
+                            "last": {
+                                "type": "string"
+                            },
+                            "next": {
+                                "type": "string"
+                            },
+                            "prev": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "SuccessProjectPaginated": {
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Project"
+                        }
+                    },
+                    "pagination": {
+                        "properties": {
+                            "total": {
+                                "type": "integer"
+                            },
+                            "per_page": {
+                                "type": "integer"
+                            },
+                            "current_page": {
+                                "type": "integer"
+                            },
+                            "last_page": {
+                                "type": "integer"
+                            },
+                            "from": {
+                                "type": "integer"
+                            },
+                            "to": {
+                                "type": "integer"
+                            },
+                            "first": {
+                                "type": "string"
+                            },
+                            "last": {
+                                "type": "string"
+                            },
+                            "next": {
+                                "type": "string"
+                            },
+                            "prev": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "SuccessProjectFetch": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Project fetched"
+                    },
+                    "success": {
+                        "properties": {
+                            "project": {
+                                "$ref": "#/components/schemas/Project"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "ErrorProjectNotFound": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Project not found"
+                    },
+                    "errors": {
+                        "properties": {
+                            "project": {
+                                "type": "object",
+                                "example": "Bad request or project not exists"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "ProjectRequest": {
+                "required": [
+                    "title",
+                    "status",
+                    "priority",
+                    "description",
+                    "deadline"
+                ],
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "Sample Project"
+                    },
+                    "status": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "priority": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "deadline": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-10-05 02:59:00"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Project description"
+                    }
+                },
+                "type": "object"
+            },
+            "SuccessProjectCreated": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Project created"
+                    },
+                    "success": {
+                        "properties": {
+                            "project": {
+                                "$ref": "#/components/schemas/Project"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "ErrorProjectValidation": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Project title is required (and 3 more errors)"
+                    },
+                    "errors": {
+                        "properties": {
+                            "title": {
+                                "description": "Array of error messages related to title field",
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "example": "Project title is required."
+                                }
+                            },
+                            "status": {
+                                "description": "Array of error messages related to status field",
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "example": "Project status is required."
+                                }
+                            },
+                            "priority": {
+                                "description": "Array of error messages related to priority field",
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "example": "Project priority is required."
+                                }
+                            },
+                            "description": {
+                                "description": "Array of error messages related to description field",
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "example": "Project description is required."
+                                }
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "SuccessProjectUpdated": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Project updated"
+                    },
+                    "success": {
+                        "properties": {
+                            "project": {
+                                "properties": {
+                                    "old": {
+                                        "$ref": "#/components/schemas/Project"
+                                    },
+                                    "new": {
+                                        "$ref": "#/components/schemas/Project"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "SuccessProjectDeleted": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Project deleted"
+                    },
+                    "success": {
+                        "properties": {
+                            "project": {
+                                "properties": {
+                                    "deleted": {
+                                        "$ref": "#/components/schemas/Project"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "LoginRequest": {
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "example": "user@localhost"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "password"
+                    }
+                },
+                "type": "object"
+            },
+            "RegisterRequest": {
+                "required": [
+                    "name",
+                    "email",
+                    "password",
+                    "password_confirmation"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "User"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "user@localhost"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "password"
+                    },
+                    "password_confirmation": {
+                        "type": "string",
+                        "example": "password"
+                    }
+                },
+                "type": "object"
+            },
+            "ErrorRegisterValidation": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "The name field is required (and 2 more errors)"
+                    },
+                    "errors": {
+                        "properties": {
+                            "name": {
+                                "description": "Array of error messages related to name field",
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "example": "The name field is required."
+                                }
+                            },
+                            "email": {
+                                "description": "Array of error messages related to email field",
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "example": "The email field is required."
+                                }
+                            },
+                            "password": {
+                                "description": "Array of error messages related to password field",
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "example": "The password field is required."
+                                }
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "ErrorLoginValidation": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "The email field is required (and 1 more errors)"
+                    },
+                    "errors": {
+                        "properties": {
+                            "email": {
+                                "description": "Array of error messages related to email field",
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "example": "The email field is required."
+                                }
+                            },
+                            "password": {
+                                "description": "Array of error messages related to password field",
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "example": "The password field is required."
+                                }
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "User"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "user@localhost"
+                    },
+                    "email_verified_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-10-03T15:26:34.000000Z",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-10-03T15:26:34.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-10-03T15:26:34.000000Z"
+                    }
+                },
+                "type": "object"
+            },
+            "SuccessAuth": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Authenticated as User"
+                    },
+                    "token": {
+                        "type": "string",
+                        "example": "JWT Token"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/User"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "JwtToken": {
+                "type": "http",
+                "description": "Enter your JWT token",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            },
+            "passport": {
+                "type": "oauth2",
+                "description": "Laravel passport oauth2 security.",
+                "in": "header",
+                "scheme": "https",
+                "flows": {
+                    "password": {
+                        "authorizationUrl": "http://localhost/oauth/authorize",
+                        "tokenUrl": "http://localhost/oauth/token",
+                        "refreshUrl": "http://localhost/token/refresh",
+                        "scopes": []
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "Projects",
+            "description": "Projects"
+        },
+        {
+            "name": "Tasks",
+            "description": "Tasks"
+        }
+    ]
+}

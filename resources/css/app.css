@@ -1,0 +1,83 @@
+@import "@fortawesome/fontawesome-free/css/all.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Styling for the Select2 selection box */
+.select2-selection {
+    border: 1px solid #ccc;
+    /* Border color */
+    border-radius: 4px;
+    /* Rounded corners */
+    height: 38px;
+    /* Height of the selection box */
+    padding: 5px 10px;
+    /* Padding inside the selection box */
+    background-color: #fff;
+    /* Background color */
+}
+
+/* Change the color of the selected option */
+.select2-selection--single .select2-selection__rendered {
+    color: #333;
+    /* Text color */
+    line-height: 36px;
+    /* Align text vertically */
+}
+
+/* Style the dropdown icon */
+.select2-selection__arrow {
+    height: 36px;
+    /* Height of the arrow */
+}
+
+/* Style for the dropdown list */
+.select2-results {
+    max-height: 200px;
+    /* Max height of the dropdown */
+    overflow-y: auto;
+    /* Enable scrolling if the dropdown is too long */
+}
+
+/* Style individual items in the dropdown */
+.select2-results__option {
+    padding: 8px 12px;
+    /* Padding for dropdown items */
+    color: #333;
+    /* Text color */
+}
+
+/* Change background color on hover */
+.select2-results__option--highlighted {
+    background-color: #007bff;
+    /* Highlight color */
+    color: #fff;
+    /* Text color when highlighted */
+}
+
+.select2-container .select2-selection--single {
+    height: auto !important;
+}
+
+
+.select2-container {
+    margin-top: 0.25rem !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+    left: 17% !important;
+    top: 70% !important;
+}
+
+.select2-container--default .select2-selection--single {
+    border: 1px solid #d1d5db !important;
+    --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+[x-cloak] {
+    display: none;
+}
