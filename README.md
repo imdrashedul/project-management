@@ -27,7 +27,7 @@ Before you begin, ensure your system has the following:
 1. **Clone the repository**:
 
     ```bash
-    git clone https://github.com/your-repo-url/task-management-system.git
+    git clone https://github.com/imdrashedul/project-management.git
     cd task-management-system
     ```
 
